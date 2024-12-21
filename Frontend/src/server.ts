@@ -26,7 +26,7 @@ app.use(cors({
 
 // Proxy requests to the backend API server
 app.use('/api', createProxyMiddleware({
-  target: 'https://training-website-6-0-backend.onrender.com',
+  target: 'https://training-website-6-0-backend.onrender.com/api',
   changeOrigin: true,
   secure: false,
 }));
