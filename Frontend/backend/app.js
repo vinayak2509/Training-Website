@@ -15,9 +15,18 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 
-// Example in Node.js with Express
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://training-website.onrender.com");
+  const allowedOrigins = [
+    'https://training-website.onrender.com',
+    'http://localhost:10000',
+    'http://localhost:4000'
+  ];
+
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.header("Access-Control-Allow-Origin", origin);
+  }
+
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
