@@ -1,0 +1,64 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark navi">
+  <div class="container">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+      <ul class="navbar-nav">
+        @for (item of navbarItems; track item) {
+        <li class="nav-item">
+          <a
+            class="nav-links nav-link"
+            [routerLink]="item.link"
+            routerLinkActive="active"
+            >{{ item.label }}</a
+          >
+        </li>
+        } @if (isLoggedIn) {
+        <li class="nav-item">
+          <a class="nav-links nav-link" (click)="onLogout()">Logout</a>
+        </li>
+        }@else {
+        <li class="nav-item">
+          <a
+            class="nav-links nav-link"
+            routerLink="/login"
+            routerLinkActive="active"
+            >Login</a
+          >
+        </li>
+        }
+
+        <li class="nav-item">
+          <a class="nav-links nav-link" (click)="onUserProfile()"
+            >User Profile</a
+          >
+        </li>
+
+        <li class="nav-item nav-links">
+          @for (item of imageLinks; track $index) {
+          <a target="_blank" [href]="item.link">
+            <img class="nav-logo" [src]="item.name" alt="" />
+          </a>
+          }
+
+          <button class="mode-btn" (click)="onNotifications()">
+            <img class="nav-logo" src="notification-logo.png" alt="" />
+          </button>
+
+          <button class="mode-btn" (click)="onModeChange()">
+            <img
+              class="nav-logo"
+              [src]="mode ? 'dark-mode.svg' : 'light-mode.svg'"
+            />
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

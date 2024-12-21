@@ -1,0 +1,28 @@
+<div class="notifications-container">
+  <h1>Messages</h1>
+
+  <ul class="notification-list">
+    @for (notification of notifications; track $index) {
+    <li class="notification-item">
+      <div class="notification-content">
+        <div class="info">
+          <h3 class="notification-name">{{ notification.name }}</h3>
+          <p class="notification-email">Email: {{ notification.email }}</p>
+          <p class="notification-message">
+            Message: {{ notification.message }}
+          </p>
+        </div>
+        <div>
+          <button class="delete-btn">
+            <img
+              src="delete-icon.svg"
+              alt=""
+              (click)="onDelete(notification._id)"
+            />
+          </button>
+        </div>
+      </div>
+    </li>
+    }
+  </ul>
+</div>

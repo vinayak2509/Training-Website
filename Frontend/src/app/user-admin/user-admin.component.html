@@ -1,0 +1,96 @@
+<div>
+  <form class="form" (ngSubmit)="onSubmit()" #contactForm="ngForm">
+    <h1 class="form-title">Edit Profile</h1>
+
+    <div class="form-row">
+      <label for="name" class="form-label">Name</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        class="form-input"
+        [(ngModel)]="enteredName"
+        #name="ngModel"
+        required
+      />
+      @if(name.touched && name.invalid){
+      <div class="tooltip">
+        <p class="tooltip-text">Name is required.</p>
+      </div>
+      }
+    </div>
+
+    <div class="form-row">
+      <label for="location" class="form-label">Location</label>
+      <input
+        type="text"
+        id="location"
+        name="location"
+        class="form-input"
+        [(ngModel)]="enteredLocation"
+        #email="ngModel"
+        required
+      />
+      @if(email.touched && email.invalid){
+      <div class="tooltip">
+        <p class="tooltip-text">Location is required.</p>
+      </div>
+      }
+    </div>
+
+    <div class="form-row">
+      <label for="education" class="form-label">Education</label>
+      <input
+        type="text"
+        id="education"
+        name="education"
+        class="form-input"
+        [(ngModel)]="enteredEducation"
+        #education="ngModel"
+        required
+      />
+      @if(education.touched && education.invalid){
+      <div class="tooltip">
+        <p class="tooltip-text">Education is required.</p>
+      </div>
+      }
+    </div>
+
+    <div class="form-row">
+      <label for="job" class="form-label">Job</label>
+      <input
+        type="text"
+        id="job"
+        name="job"
+        class="form-input"
+        [(ngModel)]="enteredJob"
+        #job="ngModel"
+        required
+      />
+      @if(job.touched && job.invalid){
+      <div class="tooltip">
+        <p class="tooltip-text">Job is required.</p>
+      </div>
+      }
+    </div>
+
+    <div class="form-row">
+      <label for="hobbies" class="form-label">Hobbies</label>
+      <input
+        type="text"
+        id="hobbies"
+        name="hobbies"
+        class="form-input"
+        [(ngModel)]="enteredHobbies"
+        #hobbies="ngModel"
+        required
+      />
+      @if(hobbies.touched && hobbies.invalid){
+      <div class="tooltip">
+        <p class="tooltip-text">Hobbies is required.</p>
+      </div>
+      }
+    </div>
+    <button class="btn-submit">Update</button>
+  </form>
+</div>

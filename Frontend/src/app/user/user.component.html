@@ -1,0 +1,59 @@
+<div>
+  <form class="form" (ngSubmit)="onSubmit()">
+    <h4>Edit Password</h4>
+
+    @if (errorMessage) {
+    <div class="error-tooltip">
+      {{ errorMessage }}
+    </div>
+    }
+
+    <div class="form-row">
+      <label for="newPassword" class="form-label">New Password</label>
+      <input
+        type="password"
+        id="newPassword"
+        name="newPassword"
+        class="form-input"
+        [(ngModel)]="enteredNewPassword"
+        #password="ngModel"
+        required
+      />
+      @if (password.touched && password.invalid) {
+      <div class="tooltip">
+        <p class="tooltip-text">New password is required.</p>
+      </div>
+      }
+    </div>
+
+    <div class="form-row">
+      <label for="confirmPassword" class="form-label">Confirm Password</label>
+      <input
+        type="password"
+        id="confirmNPassword"
+        name="confirmPassword"
+        class="form-input"
+        [(ngModel)]="enteredConfirmedNewPassword"
+        #confirmPassword="ngModel"
+        required
+      />
+      @if (confirmPassword.touched && confirmPassword.invalid) {
+      <div class="tooltip">
+        <p class="tooltip-text">Confirm Password is required.</p>
+      </div>
+      }
+    </div>
+
+    <button
+      type="submit"
+      class="signUp"
+      [disabled]="
+        !password.valid ||
+        !confirmPassword.valid ||
+        enteredNewPassword !== enteredConfirmedNewPassword
+      "
+    >
+      Update
+    </button>
+  </form>
+</div>

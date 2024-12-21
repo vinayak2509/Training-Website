@@ -1,0 +1,57 @@
+<div>
+  <form class="form" (ngSubmit)="onSubmit()">
+    <h1 class="form-title">Login</h1>
+
+    @if (errorMessage) {
+    <div class="error-tooltip">
+      {{ errorMessage }}
+    </div>
+    }
+
+    <div class="form-row">
+      <label for="email" class="form-label">Email</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        class="form-input"
+        [(ngModel)]="enteredEmail"
+        #email="ngModel"
+        required
+      />
+      @if (email.touched && email.invalid) {
+      <div class="tooltip">
+        <p class="tooltip-text">Email is required.</p>
+      </div>
+      }
+    </div>
+
+    <div class="form-row">
+      <label for="password" class="form-label">Password</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        class="form-input"
+        [(ngModel)]="enteredPassword"
+        #password="ngModel"
+        required
+      />
+      @if(password.touched && password.invalid){
+      <div class="tooltip">
+        <p class="tooltip-text">Password is required.</p>
+      </div>
+      }
+    </div>
+
+    <button
+      type="submit"
+      class="btn-submit"
+      [disabled]="!email.valid || !password.valid"
+    >
+      Log In
+    </button>
+
+    <button class="signUp" (click)="signUp()">Sign up</button>
+  </form>
+</div>

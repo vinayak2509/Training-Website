@@ -1,0 +1,66 @@
+body {
+  color: white;
+}
+
+.pfp {
+  height: 300px;
+  border: none;
+  border-radius: 150px;
+  margin-right: 5%;
+  transition: transform 0.3s;
+}
+
+.pfp:hover {
+  transform: scale(1.1);
+}
+
+.about {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-me {
+  width: 50%;
+  font-size: larger;
+  letter-spacing: 1%;
+  line-height: 24px;
+  color: #9c9c9c;
+}
+
+h1 {
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .about {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .pfp {
+    height: 200px;
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+
+  .about-me {
+    width: 80%;
+    font-size: medium;
+  }
+}
+
+@media (max-width: 480px) {
+  .pfp {
+    height: 150px;
+  }
+
+  .about-me {
+    font-size: small;
+    line-height: 20px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+}
