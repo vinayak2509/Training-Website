@@ -39,23 +39,31 @@ export class UserAdminComponent implements OnInit {
   }
 
   onSubmit() {
+    if (!this.enteredName || !this.enteredLocation || !this.enteredEducation || !this.enteredJob) {
+      alert('All fields except hobbies are required.');
+      return;
+    }
+  
+    const hobbiesArray = this.enteredHobbies.split(',').map((hobby) => hobby.trim()).filter(Boolean);
+  
     const updatedData = {
       name: this.enteredName,
       location: this.enteredLocation,
       education: this.enteredEducation,
       job: this.enteredJob,
-      hobbies: this.enteredHobbies.split(',').map((hobby) => hobby.trim()), // Convert string to array
+      hobbies: hobbiesArray,
     };
-
-    this.http.post(`${environment.backendUrl}/about`, updatedData).subscribe(
-      (response) => {
+  
+    this.http.post(`${environment.backendUrl}/about`, updatedData).subscribe({
+      next: (response) => {
         console.log('User data updated successfully:', response);
         alert('Profile updated successfully!');
       },
-      (error) => {
-        console.error('Error updating user data:', error);
-        alert('Failed to update profile.');
-      }
-    );
+      error: (error) => {
+        console.error('Failed to update profile. Server Response:', error);
+        alert('Failed to update profile. Please try again later.');
+      },
+    });
   }
+  
 }

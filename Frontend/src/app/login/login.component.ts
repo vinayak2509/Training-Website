@@ -22,42 +22,28 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit(): void {
-    const userCredentials = {
-      email: this.enteredEmail,
-      password: this.enteredPassword,
-    };
-
-    this.http
-      .post<any>(`${environment.backendUrl}/login`, userCredentials)
-      .subscribe({
-        next: (response) => {
-          try {
-            const userData = {
-              email: this.enteredEmail,
-              role: response.role,
-            };
-            sessionStorage.setItem('user', JSON.stringify(userData));
-            sessionStorage.setItem('isLoggedIn', 'true');
-          } catch (e) {
-            console.error('Failed to save to session storage', e);
-            this.errorMessage =
-              'An error occurred while storing session data. Please try again.';
-            return;
-          }
-
-          if (response.role === 'admin') {
-            window.location.href = '/userAdmin';
-          } else {
-            window.location.href = '/user';
-          }
-        },
-        error: (error) => {
-          this.errorMessage =
-            error.error.message || 'An error occurred. Please try again.';
-        },
-      });
+    const userCredentials = { email: this.enteredEmail, password: this.enteredPassword };
+  
+    this.http.post<any>(`${environment.backendUrl}/login`, userCredentials).subscribe({
+      next: (response) => {
+        try {
+          const userData = { email: this.enteredEmail, role: response.role };
+          sessionStorage.setItem('user', JSON.stringify(userData));
+          sessionStorage.setItem('isLoggedIn', 'true');
+        } catch (e) {
+          console.error('Failed to save session data:', e);
+          this.errorMessage = 'Unable to store session data. Please try again.';
+          return; // Prevent further processing
+        }
+  
+        response.role === 'admin' ? this.router.navigate(['/userAdmin']) : this.router.navigate(['/user']);
+      },
+      error: (error) => {
+        this.errorMessage = error.error.message || 'An error occurred. Please try again.';
+      },
+    });
   }
-
+  
   signUp(): void {
     this.router.navigate(['/signUp']);
   }
