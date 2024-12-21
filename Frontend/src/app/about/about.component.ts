@@ -25,12 +25,13 @@ export class AboutComponent implements OnInit {
   }
 
   getAboutMeData() {
-    this.http.get(`${environment.backendUrl}/about`).subscribe({
-      next: (data) => (this.aboutMe = data),
-      error: (error) => {
-        console.error('Failed to fetch About Me data. Server Response:', error);
-        alert('Unable to load About Me data. Please try again later.');
+    this.http.get(environment.backendUrl + '/about').subscribe(
+      (data: any) => {
+        this.aboutMe = data;
       },
-    });
+      (error) => {
+        console.error('Error fetching About Me data:', error);
+      }
+    );
   }
 }
