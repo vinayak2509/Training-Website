@@ -17,6 +17,7 @@ app.use(
     origin: [
       "http://localhost:4000",
       "https://training-website-6-0.onrender.com",
+      "https://training-website.onrender.com"
     ],
     methods: "GET,POST,DELETE,UPDATE,PUT",
     allowedHeaders: "Content-Type",
