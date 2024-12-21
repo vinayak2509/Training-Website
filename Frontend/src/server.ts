@@ -43,13 +43,16 @@ app.use(
  * Handle all other requests by rendering the Angular application.
  */
 // Proxy requests to the backend API server
-app.use('/api', createProxyMiddleware({
-  target: environment.backendUrl,  // Replace with your backend URL (e.g., http://localhost:5000)
-  changeOrigin: true,
-  pathRewrite: {
-    '^/api': '',  // Optionally remove /api prefix if not needed by the backend
-  },
-}));
+app.use(
+  '/api',  // This is the part your frontend sends requests to
+  createProxyMiddleware({
+    target: 'https://training-website-6-0-backend.onrender.com/api',  // Your backend URL
+    changeOrigin: true,
+    pathRewrite: {
+      '^/api': '',  // Remove the '/api' prefix before sending the request to the backend
+    },
+  })
+);
 
 app.use('/**', (req, res, next) => {
   angularApp
