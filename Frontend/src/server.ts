@@ -7,6 +7,8 @@ import {
 import express from 'express';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createProxyMiddleware } from 'http-proxy-middleware';
+import { environment } from './environments/environment';
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
@@ -40,10 +42,14 @@ app.use(
 /**
  * Handle all other requests by rendering the Angular application.
  */
-app.use('/api/**', (req, res, next) => {
-  // Pass API requests to the backend
-  next();
-});
+// Proxy requests to the backend API server
+app.use('/api', createProxyMiddleware({
+  target: environment.backendUrl,  // Replace with your backend URL (e.g., http://localhost:5000)
+  changeOrigin: true,
+  pathRewrite: {
+    '^/api': '',  // Optionally remove /api prefix if not needed by the backend
+  },
+}));
 
 app.use('/**', (req, res, next) => {
   angularApp
