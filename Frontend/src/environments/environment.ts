@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  backendUrl: 'http://localhost:5000/api',
+  backendUrl: 'https://training-website.onrender.com/api',
 };
 //'https://training-website-6-0-backend.onrender.com/api'
