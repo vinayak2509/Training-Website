@@ -15,15 +15,18 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // CORS Configuration
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*"); // Allow requests from any origin
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(200); // Handle preflight requests
-  }
-  next();
-});
+app.use(
+  cors({
+    origin: [
+      "http://localhost:4000", // Allow local testing
+      "https://training-website.onrender.com", // Allow your production frontend
+    ],
+    methods: "GET, POST, DELETE, PUT, PATCH, OPTIONS",
+    allowedHeaders: ["Content-Type", "Authorization"], // Allow headers used in requests
+    credentials: true, // If cookies or authorization headers are required
+  })
+);
+
 
 // Handle preflight (OPTIONS) requests
 app.options("*", cors());
