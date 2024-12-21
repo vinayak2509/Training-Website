@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { isPlatformBrowser } from '@angular/common';
+import { PLATFORM_ID } from '@angular/core';
 
 @Component({
   selector: 'app-about',
@@ -18,10 +20,15 @@ export class AboutComponent implements OnInit {
     hobbies: '',
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) private platformId: any
+  ) {}
 
   ngOnInit(): void {
-    this.getAboutMeData();
+    if (isPlatformBrowser(this.platformId)) {
+      this.getAboutMeData();
+    }
   }
 
   getAboutMeData() {
@@ -37,5 +44,4 @@ export class AboutComponent implements OnInit {
       }
     });
   }
-  
 }
