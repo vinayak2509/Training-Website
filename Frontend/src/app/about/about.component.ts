@@ -32,7 +32,7 @@ export class AboutComponent implements OnInit {
   }
 
   getAboutMeData() {
-    this.http.get(environment.backendUrl + '/about').subscribe({
+    this.http.get(environment.backendUrl + '/about', { withCredentials: true }).subscribe({
       next: (data: any) => {
         this.aboutMe = data;
       },
@@ -43,5 +43,6 @@ export class AboutComponent implements OnInit {
         console.log('Request completed');
       }
     });
+    
   }
 }
