@@ -12,7 +12,7 @@ import { environment } from './environments/environment';
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
-
+const cors = require('cors')
 const app = express();
 const angularApp = new AngularNodeAppEngine();
 
@@ -43,17 +43,8 @@ app.use(
  * Handle all other requests by rendering the Angular application.
  */
 // Proxy requests to the backend API server
-app.use(
-  '/api',  // This is the part your frontend sends requests to
-  createProxyMiddleware({
-    target: 'https://training-website-6-0-backend.onrender.com/api',  // Your backend URL
-    changeOrigin: true,
-    pathRewrite: {
-      '^/api': '',  // Remove the '/api' prefix before sending the request to the backend
-    },
-  })
-);
 
+app.use(cors({ origin: 'https://training-website.onrender.com', methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS', allowedHeaders: ['Content-Type', 'Authorization'], credentials: true, }));
 app.use('/**', (req, res, next) => {
   angularApp
     .handle(req)
