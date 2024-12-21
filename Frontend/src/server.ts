@@ -46,11 +46,8 @@ app.use(
 app.use(
   '/api',  // This is the part your frontend sends requests to
   createProxyMiddleware({
-    target: 'https://training-website-6-0-backend.onrender.com',  // Your backend URL
+    target: 'https://training-website-6-0-backend.onrender.com/api',  // Your backend URL
     changeOrigin: true,
-    pathRewrite: {
-      '^/api': '',  // Remove the '/api' prefix before sending the request to the backend
-    },
   })
 );
 

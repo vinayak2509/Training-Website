@@ -25,7 +25,7 @@ export class AboutComponent implements OnInit {
   }
 
   getAboutMeData() {
-    this.http.get(environment.backendUrl + '/api/about').subscribe({
+    this.http.get(environment.backendUrl + '/about').subscribe({
       next: (data: any) => {
         this.aboutMe = data;
       },
