@@ -12,25 +12,26 @@ import { environment } from './environments/environment';
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
-const cors = require('cors')
+const cors = require('cors');
 const app = express();
 const angularApp = new AngularNodeAppEngine();
 
-/**
- * Example Express Rest API endpoints can be defined here.
- * Uncomment and define endpoints as necessary.
- *
- * Example:
- * ```ts
- * app.get('/api/**', (req, res) => {
- *   // Handle API request
- * });
- * ```
- */
+// CORS Configuration
+app.use(cors({
+  origin: 'https://training-website.onrender.com',
+  methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS',
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+}));
 
-/**
- * Serve static files from /browser
- */
+// Proxy requests to the backend API server
+app.use('/api', createProxyMiddleware({
+  target: 'https://training-website-6-0-backend.onrender.com',
+  changeOrigin: true,
+  secure: false,
+}));
+
+// Serve static files from /browser
 app.use(
   express.static(browserDistFolder, {
     maxAge: '1y',
@@ -39,12 +40,7 @@ app.use(
   }),
 );
 
-/**
- * Handle all other requests by rendering the Angular application.
- */
-// Proxy requests to the backend API server
-
-app.use(cors({ origin: 'https://training-website.onrender.com', methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS', allowedHeaders: ['Content-Type', 'Authorization'], credentials: true, }));
+// Handle all other requests by rendering the Angular application
 app.use('/**', (req, res, next) => {
   angularApp
     .handle(req)
@@ -54,11 +50,7 @@ app.use('/**', (req, res, next) => {
     .catch(next);
 });
 
-
-/**
- * Start the server if this module is the main entry point.
- * The server listens on the port defined by the `PORT` environment variable, or defaults to 4000.
- */
+// Start the server if this module is the main entry point
 if (isMainModule(import.meta.url)) {
   const port = process.env['PORT'] || 4000;
   app.listen(port, () => {
@@ -66,7 +58,5 @@ if (isMainModule(import.meta.url)) {
   });
 }
 
-/**
- * The request handler used by the Angular CLI (dev-server and during build).
- */
+// The request handler used by the Angular CLI (dev-server and during build)
 export const reqHandler = createNodeRequestHandler(app);
