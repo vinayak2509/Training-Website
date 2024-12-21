@@ -12,7 +12,7 @@ const notificationsRoutes = require("./routes/notifications");
 const userUpdateRoutes = require("./routes/userUpdate");
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = 5000;
 
 
 app.use((req, res, next) => {
