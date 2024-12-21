@@ -12,18 +12,14 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 
 // Import backend routes
-// @ts-ignore
-import contactRoutes from '../backend/routes/contact';
-// @ts-ignore
-import userRoutes from './backend/routes/user';
-// @ts-ignore
-import aboutRoutes from './backend/routes/about';
-// @ts-ignore
-import signUpRoutes from './backend/routes/signUp';
-// @ts-ignore
-import notificationsRoutes from './backend/routes/notifications';
-// @ts-ignore
-import userUpdateRoutes from './backend/routes/userUpdate';
+
+const userRoutes = require('../backend/routes/user');
+const aboutRoutes = require('../backend/routes/about');
+const signUpRoutes = require('../backend/routes/signUp');
+const notificationsRoutes = require('../backend/routes/notifications');
+const userUpdateRoutes = require('../backend/routes/userUpdate');
+const contactRoutes = require('../backend/routes/contact');
+
 
 
 
