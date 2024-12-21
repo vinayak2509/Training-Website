@@ -1,0 +1,9 @@
+{
+    "/api": {
+      "target": "https://training-website-6-0-backend.onrender.com",
+      "secure": false,
+      "changeOrigin": true,
+      "logLevel": "debug"
+    }
+  }
+  
