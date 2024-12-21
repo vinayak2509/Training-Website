@@ -25,13 +25,17 @@ export class AboutComponent implements OnInit {
   }
 
   getAboutMeData() {
-    this.http.get(environment.backendUrl + '/about').subscribe(
-      (data: any) => {
+    this.http.get(environment.backendUrl + '/api/about').subscribe({
+      next: (data: any) => {
         this.aboutMe = data;
       },
-      (error) => {
+      error: (error) => {
         console.error('Error fetching About Me data:', error);
+      },
+      complete: () => {
+        console.log('Request completed');
       }
-    );
+    });
   }
+  
 }
