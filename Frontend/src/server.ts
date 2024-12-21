@@ -40,6 +40,11 @@ app.use(
 /**
  * Handle all other requests by rendering the Angular application.
  */
+app.use('/api/**', (req, res, next) => {
+  // Pass API requests to the backend
+  next();
+});
+
 app.use('/**', (req, res, next) => {
   angularApp
     .handle(req)
@@ -48,6 +53,7 @@ app.use('/**', (req, res, next) => {
     )
     .catch(next);
 });
+
 
 /**
  * Start the server if this module is the main entry point.
