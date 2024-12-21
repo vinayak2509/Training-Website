@@ -12,7 +12,7 @@ const notificationsRoutes = require("./routes/notifications");
 const userUpdateRoutes = require("./routes/userUpdate");
 
 const app = express();
-const PORT = process.env.PORT 
+const PORT = 5000
 
 
 app.use((req, res, next) => {
@@ -61,6 +61,4 @@ app.use("/api", notificationsRoutes);
 app.use("/api", userUpdateRoutes);
 
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+

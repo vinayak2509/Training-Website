@@ -7,37 +7,81 @@ import {
 import express from 'express';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { createProxyMiddleware } from 'http-proxy-middleware';
-import { environment } from './environments/environment';
+import mongoose from 'mongoose';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+
+// Import backend routes
+// @ts-ignore
+import contactRoutes from '../backend/routes/contact';
+// @ts-ignore
+import userRoutes from './backend/routes/user';
+// @ts-ignore
+import aboutRoutes from './backend/routes/about';
+// @ts-ignore
+import signUpRoutes from './backend/routes/signUp';
+// @ts-ignore
+import notificationsRoutes from './backend/routes/notifications';
+// @ts-ignore
+import userUpdateRoutes from './backend/routes/userUpdate';
+
+
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
-const cors = require('cors');
 const app = express();
 const angularApp = new AngularNodeAppEngine();
 
+// Environment variables
+const PORT = process.env['PORT'] || 4000;
+
 // CORS Configuration
-app.use(cors({
-  origin: 'https://training-website.onrender.com',
-  methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS',
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: [
+      'https://training-website.onrender.com',
+      'http://localhost:10000',
+      'http://localhost:4000',
+    ],
+    methods: 'GET, POST, DELETE, PUT, PATCH, OPTIONS',
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+  })
+);
 
-// Proxy requests to the backend API server
-app.use('/api', createProxyMiddleware({
-  target: 'https://training-website-6-0-backend.onrender.com/api',
-  changeOrigin: true,
-  secure: false,
-}));
+// MongoDB Connection
+mongoose
+  .connect("mongodb+srv://admin:12345@cluster0.lut4d.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
+  })
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((err) => console.error("Could not connect to MongoDB:", err));
 
-// Serve static files from /browser
+
+// Middleware to log request origins and methods
+app.use((req, res, next) => {
+  console.log('Request origin:', req.headers.origin);
+  console.log('Request method:', req.method);
+  next();
+});
+
+// Parse JSON request bodies
+app.use(bodyParser.json());
+
+// Serve backend API routes
+app.use('/api', contactRoutes);
+app.use('/api', userRoutes);
+app.use('/api', aboutRoutes);
+app.use('/api', signUpRoutes);
+app.use('/api', notificationsRoutes);
+app.use('/api', userUpdateRoutes);
+
+// Serve static files from /browser for the Angular app
 app.use(
   express.static(browserDistFolder, {
     maxAge: '1y',
     index: false,
     redirect: false,
-  }),
+  })
 );
 
 // Handle all other requests by rendering the Angular application
@@ -45,16 +89,15 @@ app.use('/**', (req, res, next) => {
   angularApp
     .handle(req)
     .then((response) =>
-      response ? writeResponseToNodeResponse(response, res) : next(),
+      response ? writeResponseToNodeResponse(response, res) : next()
     )
     .catch(next);
 });
 
 // Start the server if this module is the main entry point
 if (isMainModule(import.meta.url)) {
-  const port =  4000;
-  app.listen(port, () => {
-    console.log(`Node Express server listening on http://localhost:${port}`);
+  app.listen(PORT, () => {
+    console.log(`Node Express server listening on http://localhost:${PORT}`);
   });
 }
 
