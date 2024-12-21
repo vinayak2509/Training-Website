@@ -33,10 +33,15 @@ export class LoginComponent implements OnInit {
         } catch (e) {
           console.error('Failed to save session data:', e);
           this.errorMessage = 'Unable to store session data. Please try again.';
-          return; // Prevent further processing
+          return;
         }
   
-        response.role === 'admin' ? this.router.navigate(['/userAdmin']) : this.router.navigate(['/user']);
+        if (response.role === 'admin') {
+          window.location.href = '/userAdmin';
+        } else {
+          window.location.href = '/user';
+        }
+        
       },
       error: (error) => {
         this.errorMessage = error.error.message || 'An error occurred. Please try again.';
