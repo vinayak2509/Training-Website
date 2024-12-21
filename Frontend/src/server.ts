@@ -48,6 +48,9 @@ app.use(
   createProxyMiddleware({
     target: 'https://training-website-6-0-backend.onrender.com/api',  // Your backend URL
     changeOrigin: true,
+    pathRewrite: {
+      '^/api': '',  // Remove the '/api' prefix before sending the request to the backend
+    },
   })
 );
 
