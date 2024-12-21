@@ -18,10 +18,12 @@ app.use(
       "http://localhost:4000",
       "https://training-website.onrender.com"
     ],
-    methods: "GET,POST,DELETE,UPDATE,PUT",
-    allowedHeaders: "Content-Type",
+    methods: ["GET", "POST", "DELETE", "UPDATE", "PUT"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true, 
   })
 );
+
 
 app.use(bodyParser.json());
 
